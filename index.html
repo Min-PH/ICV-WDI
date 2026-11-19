@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WDI Concept Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: calm, academic, a teaching figure from a public-health textbook.
+   IDEA: a specimen fishbone on a lightbox; each bone opens its rubric card.
+   PICTURE: the fishbone itself, large, bones as touch targets, head glowing when chosen.
+   COLOUR and TYPE: white ground, one public-health blue, teal for justice; Source Serif 4 titles, Source Sans 3 text.
+   LAYOUT: figure left, rubric panel right on wide screens; stacked figure, selector, panel on phones. */
+:root{color-scheme:light dark;
+ --bg:light-dark(#ffffff,#0e1620);--ink:light-dark(#14202b,#e4ebf2);--quiet:light-dark(#55626f,#9aa8b6);
+ --line:light-dark(#8b97a3,#6c7a88);--rule:light-dark(#dfe5eb,#253444);
+ --blue:light-dark(#1d5fa8,#76aef0);--tint:light-dark(#e9f1fb,#14283f);
+ --teal:light-dark(#0f766e,#4cc3b5);--teal-tint:light-dark(#e3f4f1,#11302d);--card:light-dark(#f6f8fa,#132030)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Source Sans 3",system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(20px,3.5vw,48px) max(5vw,16px);max-width:1320px;margin:0 auto}
+.banner{background:var(--blue);color:#fff;font-size:14px;padding:8px max(5vw,16px)}
+.banner a{color:#fff}
+h1{font:600 clamp(28px,3.6vw,42px)/1.08 "Source Serif 4",Georgia,serif;margin:0 0 6px;text-wrap:balance}
+.cap{color:var(--quiet);margin:0 0 18px;max-width:70ch}
+.grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:28px;align-items:start}
+.fig{background:var(--card);border-radius:12px;padding:10px}
+svg{display:block;width:100%;height:auto}
+.part{cursor:pointer;outline:none}
+.part rect,.part path.hit{transition:fill .15s,stroke .15s}
+.part:hover rect,.part:focus-visible rect,.part.on rect{fill:var(--tint);stroke:var(--blue);stroke-width:2.5}
+.part.j:hover rect,.part.j:focus-visible rect,.part.j.on rect{fill:var(--teal-tint);stroke:var(--teal)}
+.part:focus-visible rect{stroke-dasharray:5 3}
+.picker{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.picker button{font:600 14px "Source Sans 3",sans-serif;min-height:44px;padding:8px 14px;border-radius:22px;border:1.5px solid var(--rule);background:var(--bg);color:var(--ink);cursor:pointer}
+.picker button[aria-pressed=true]{border-color:var(--blue);background:var(--tint)}
+.picker button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.panel{border:1.5px solid var(--rule);border-radius:12px;padding:20px 22px;min-height:420px}
+@media(min-width:901px){.panel{position:sticky;top:16px}}
+.panel h2{font:600 24px/1.15 "Source Serif 4",Georgia,serif;margin:0 0 4px}
+.panel .q{color:var(--quiet);margin:0 0 14px}
+.panel .src{font-size:13px;color:var(--quiet);margin-top:14px}
+details.lv{border-top:1px solid var(--rule)}
+details.lv summary{list-style:none;display:flex;align-items:center;gap:12px;min-height:44px;padding:6px 0;cursor:pointer}
+details.lv summary::-webkit-details-marker{display:none}
+details.lv summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:6px}
+details.lv summary::after{content:"+";margin-left:auto;color:var(--quiet);font-weight:600}
+details.lv[open] summary::after{content:"\2212"}
+@media(min-width:901px){details.lv summary::after{display:none}}
+details.lv .n{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--tint);color:var(--blue)}
+details.lv.j .n{background:var(--teal-tint);color:var(--teal)}
+details.lv b{font-weight:600}
+details.lv .body{padding:0 0 10px 44px}
+details.lv .ev{display:block;font-size:14px;color:var(--quiet);margin-top:2px}
+details.nt{margin-top:10px}details.nt summary{cursor:pointer;color:var(--blue);font-weight:600;min-height:44px;display:flex;align-items:center}
+.note{background:var(--tint);border-radius:8px;padding:10px 12px;font-size:15px;margin-top:12px}
+.note.j{background:var(--teal-tint)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:8px 6px;border-top:1px solid var(--rule);vertical-align:top}
+th{font-weight:600}
+.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;border-top:1px solid var(--rule)}
+.how h3{font:600 18px "Source Serif 4",Georgia,serif;margin:0 0 4px}
+.how p{margin:0;color:var(--quiet)}
+footer{font-size:14px;color:var(--quiet);border-top:1px solid var(--rule)}
+footer a{color:var(--blue)}
+@media(max-width:900px){.grid{grid-template-columns:minmax(0,1fr);gap:12px}.panel{order:-1;min-height:0;padding:14px 16px}.panel h2{font-size:20px}.panel .q{margin-bottom:8px;font-size:15px}.how{grid-template-columns:minmax(0,1fr)}
+ .picker{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}.picker button{flex:none}.cap{margin-bottom:12px}
+ .banner{font-size:12.5px;padding:6px 16px}.band{padding-top:16px}h1{font-size:24px;margin-bottom:10px}
+ details.lv summary{min-height:40px;padding:3px 0}details.nt{margin-top:4px}details.nt summary{min-height:36px}.fig{padding:4px}}
+@media(max-width:600px){.cap{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="banner">Wu, M. (2026). <i>WDI: The Workflow Depth Index for AI Adoption</i>. SSRN preprint. <a href="https://doi.org/10.2139/ssrn.7702063">https://doi.org/10.2139/ssrn.7702063</a> · Companion to <i>Artificial Intelligence in Public Health</i> (Springer, 2026)</div>
+
+<main class="band">
+ <h1>Interactive Concept Map: the Workflow Depth Index</h1>
+ <p class="cap">Five dimensions build deep, durable AI adoption in one named workflow; encoding justice runs beneath them all. Hover over, tap or tab to any part of the fishbone to see its 1–5 rubric.</p>
+
+ <div class="grid">
+  <div>
+   <div class="fig">
+    <svg id="fish" viewBox="0 0 760 470" role="group" aria-label="WDI fishbone: five dimensions lead to deep adoption, with encoding justice beneath">
+     <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--line)"/></marker></defs>
+     <g fill="none" stroke="var(--line)" stroke-width="2.5" stroke-linecap="round">
+      <path d="M150 230H578" stroke-width="4" marker-end="url(#ar)"/>
+      <path d="M210 112L262 230"/><path d="M380 112L432 230"/><path d="M550 112L578 200"/>
+      <path d="M290 348L342 230"/><path d="M470 348L522 230"/>
+      <path d="M560 392V236" stroke-dasharray="5 5" stroke-width="1.5"/>
+     </g>
+     <g class="part" data-k="removal" tabindex="0" role="button" aria-label="Start: the removal test">
+      <rect x="16" y="196" width="134" height="68" rx="10" fill="var(--bg)" stroke="var(--line)" stroke-width="1.5"/>
+      <text x="83" y="224" text-anchor="middle" font-size="15" font-weight="600" fill="var(--ink)">Start here</text>
+      <text x="83" y="246" text-anchor="middle" font-size="14" fill="var(--quiet)">Removal test</text>
+     </g>
+     <g class="part" data-k="wd" tabindex="0" role="button" aria-label="Workflow Depth rubric">
+      <rect x="130" y="56" width="160" height="56" rx="10" fill="var(--bg)" stroke="var(--line)" stroke-width="1.5"/>
+      <text x="210" y="90" text-anchor="middle" font-size="16" font-weight="600" fill="var(--ink)">Workflow Depth</text>
+     </g>
+     <g class="part" data-k="ai" tabindex="0" role="button" aria-label="Action Integration rubric">
+      <rect x="300" y="56" width="160" height="56" rx="10" fill="var(--bg)" stroke="var(--line)" stroke-width="1.5"/>
+      <text x="380" y="90" text-anchor="middle" font-size="16" font-weight="600" fill="var(--ink)">Action Integration</text>
+     </g>
+     <g class="part" data-k="ua" tabindex="0" role="button" aria-label="User Adoption Level rubric">
+      <rect x="470" y="56" width="166" height="56" rx="10" fill="var(--bg)" stroke="var(--line)" stroke-width="1.5"/>
+      <text x="553" y="90" text-anchor="middle" font-size="16" font-weight="600" fill="var(--ink)">User Adoption Level</text>
+     </g>
+     <g class="part" data-k="sr" tabindex="0" role="button" aria-label="Structural Reorganization rubric">
+      <rect x="196" y="348" width="208" height="56" rx="10" fill="var(--bg)" stroke="var(--line)" stroke-width="1.5"/>
+      <text x="300" y="382" text-anchor="middle" font-size="16" font-weight="600" fill="var(--ink)">Structural Reorganization</text>
+     </g>
+     <g class="part" data-k="oa" tabindex="0" role="button" aria-label="Outcome Attribution rubric">
+      <rect x="414" y="348" width="170" height="56" rx="10" fill="var(--bg)" stroke="var(--line)" stroke-width="1.5"/>
+      <text x="499" y="382" text-anchor="middle" font-size="16" font-weight="600" fill="var(--ink)">Outcome Attribution</text>
+     </g>
+     <g class="part" data-k="head" tabindex="0" role="button" aria-label="Deep adoption: scoring bands">
+      <rect x="584" y="182" width="160" height="96" rx="14" fill="var(--tint)" stroke="var(--blue)" stroke-width="2"/>
+      <text x="664" y="218" text-anchor="middle" font-size="17" font-weight="700" fill="var(--ink)">Deep, durable</text>
+      <text x="664" y="240" text-anchor="middle" font-size="17" font-weight="700" fill="var(--ink)">AI adoption</text>
+      <text x="664" y="262" text-anchor="middle" font-size="14" fill="var(--quiet)">19–25, none below 3</text>
+     </g>
+     <g class="part j" data-k="justice" tabindex="0" role="button" aria-label="Encoding justice rules">
+      <rect x="16" y="416" width="728" height="44" rx="10" fill="var(--teal-tint)" stroke="var(--teal)" stroke-width="1.5"/>
+      <text x="380" y="444" text-anchor="middle" font-size="16" font-weight="600" fill="var(--ink)">Encoding justice runs through every bone</text>
+     </g>
+    </svg>
+   </div>
+   <div class="picker" id="picker" aria-label="Choose a part of the WDI"></div>
+  </div>
+
+  <section class="panel" id="panel" aria-live="polite"></section>
+ </div>
+</main>
+
+<section class="band how">
+ <div><h3>1 · Pick one workflow</h3><p>Score one named, consequential workflow, such as disease-report triage or case investigation, not a tool or a department.</p></div>
+ <div><h3>2 · Score each bone 1–5</h3><p>Cite observable evidence for every score. When torn between two levels, take the lower. Report the profile, not only the total.</p></div>
+ <div><h3>3 · Invest in the weakest bone</h3><p>Any dimension at 1 or 2 marks the next investment. Date the score and re-score after major model or process changes.</p></div>
+</section>
+
+<footer class="band">Interactive Concept Viewers · © 2026 Min Wu · Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The WDI is a first-draft instrument offered for use and testing; cite <a href="https://doi.org/10.2139/ssrn.7702063">Wu (2026)</a> when you use or adapt it. <a href="https://github.com/Min-PH/ICV-WDI">Source on GitHub</a>.</footer>
+
+<script>
+{
+const D = {
+ removal:{t:'Start here: the removal test',q:'What would happen tomorrow if the AI were removed from this workflow?',
+  levels:[['Nothing changes','Adoption is at the surface (Workflow Depth 1–2).'],['Work continues more slowly','AI performs a step, but the workflow does not depend on it (3).'],['Capacity or quality drops materially','AI is embedded in several steps (4).'],['The workflow must be redesigned','AI is load-bearing (5).']],
+  list:true,note:'Apply the test to Workflow Depth and to User Adoption Level 5. Licenses, pilots and enterprise-wide rollouts show access, the floor of the scale, not depth.'},
+ wd:{t:'Workflow Depth',q:'How many core steps of the workflow does AI perform, and does the workflow depend on it?',
+  levels:[['Peripheral','AI is available as a standalone tool, outside any defined workflow.','Licenses exist; no workflow documentation mentions AI.'],
+   ['Supporting','AI is used around a core workflow (drafting, summarizing, reporting), but no core step depends on it.','Use concentrated in documents, email and reports.'],
+   ['One core step','AI performs at least one step of a core workflow; removing it slows the workflow but does not break it.','A process map with an AI step; throughput with and without AI.'],
+   ['Several core steps','AI is embedded in multiple steps; removing it would materially reduce capacity or quality.','A process map with several AI steps; service levels that assume AI.'],
+   ['Load-bearing','The workflow is designed around AI; removing it would require redesigning the workflow.','No manual fallback at current volume; redesign documents built on AI steps.']]},
+ ai:{t:'Action Integration',q:'How much decision and action authority does AI hold?',
+  levels:[['Informational','AI produces content people may read; nothing links it to a decision.','Output filed or circulated, not referenced at decision points.'],
+   ['Advisory','AI recommendations are consulted at the decision-maker’s discretion.','Anecdotal reports; no defined decision point.'],
+   ['Required input','AI output is a defined input at a named decision point; people decide.','Protocols or forms that require the AI output.'],
+   ['Co-execution','AI prepares or carries out actions that people approve before they take effect.','Approval and override rates tracked; actions logged as AI-initiated; equity audit of AI-initiated actions.'],
+   ['Bounded delegation','AI acts on its own within defined limits; people oversee by exception and audit.','Written authority limits; exception queues; audit records, including equity audits.']],
+  note:'A higher score describes depth, not desirability. In high-stakes settings such as clinical decisions, level 3 or 4 may be the right ceiling. Draws on the levels-of-automation tradition (Sheridan, Verplank, & Brooks, 1978; Parasuraman, Sheridan, & Wickens, 2000).'},
+ ua:{t:'User Adoption Level',q:'What share of eligible workflow runs (cases, transactions, requests) pass through the AI step?',
+  levels:[['Rare','Only a small minority of eligible runs use the AI.','Low run share; use concentrated among a few enthusiasts.'],
+   ['Occasional','A minority of runs use AI, varying by person or team.','Uneven run share; use falls off after launch.'],
+   ['Regular','Most eligible runs use AI, but bypassing it is easy and common.','Majority run share alongside frequent workarounds.'],
+   ['Default','AI is the standard path; bypassing it needs a reason.','High, stable run share; bypasses logged.'],
+   ['Relied upon','Nearly all eligible runs use AI, and users would resist its removal.','Incidents or feedback during outages show dependence.']],
+  note:'Measure by run share, not by the share of people with access, which overstates reliance. For population-serving workflows, also score by equity-relevant group.'},
+ sr:{t:'Structural Reorganization',q:'Have processes, roles or governance changed around AI?',
+  levels:[['None','AI sits on top of unchanged roles, processes and accountability.','Org charts, job descriptions and procedures unchanged.'],
+   ['Informal','Individuals or teams adapt their own routines, or forms change, without a redesigned process or a defined verification step.','Undocumented team practices.'],
+   ['Process redesign','At least one process is formally redesigned, including how AI output is checked.','Revised procedures with a defined verification step.'],
+   ['Organizational change','Roles, staffing, decision rights or governance change around AI, with a voice for the people the workflow affects.','New or revised roles; changed staffing models; AI governance with input from affected communities or patients.'],
+   ['Operating model','Budgets, metrics, training and structure assume AI-integrated work; redesign is continuous.','Plans and budgets built on AI-enabled capacity; a standing redesign function.']],
+  note:'Because AI models change often, the capacity for continuous redesign (level 5) counts as depth.'},
+ oa:{t:'Outcome Attribution',q:'Can AI-driven benefits, whether financial, operational or health, be measured and separated from legacy results?',
+  levels:[['None','Benefits are asserted or anecdotal.','Testimonials; no measurement.'],
+   ['Activity only','Usage or self-reported time savings are measured.','Seat counts, prompt volumes, survey estimates of hours saved.'],
+   ['Process outcomes','Workflow results are measured before and after AI.','Cycle time, error rate, throughput; in public health, time from report to investigation or cases detected (not yet connected to care).'],
+   ['Attributed intermediate or financial outcomes','Outcomes with an established link to final benefit are attributed to AI against a comparison.','Pilot-versus-control or staggered-rollout comparisons of cost per case, vaccination coverage, or cases detected and connected to care.'],
+   ['Attributed final outcomes, or managed on attribution','Final financial or health outcomes are attributed to AI, or attributed intermediate outcomes drive investment decisions.','Incidence, mortality or quality of life with a credible comparison; investment cases built on attribution.']],
+  note:'Level 5 can be reached through attributed intermediate outcomes used to manage the program, so prevention work is not penalized for benefits that take years to appear.'},
+ head:{t:'Deep, durable AI adoption',q:'Add the five scores (5–25), then read the band.',band:true},
+ justice:{t:'Encoding justice',q:'Justice is a condition of depth, not a sixth score that could be traded off against the others.',justice:true}
+};
+const order=['removal','wd','ai','ua','sr','oa','head','justice'];
+const names={removal:'Removal test',wd:'Workflow Depth',ai:'Action Integration',ua:'User Adoption Level',sr:'Structural Reorganization',oa:'Outcome Attribution',head:'Scoring bands',justice:'Encoding justice'};
+const panel=document.getElementById('panel'),picker=document.getElementById('picker');
+picker.innerHTML=order.map(k=>`<button type="button" data-k="${k}" aria-pressed="false">${names[k]}</button>`).join('');
+const wide=matchMedia('(min-width:901px)');let cur=null;
+const lv=(n,title,body,cls='')=>`<details class="lv ${cls}" ${wide.matches?'open':''}><summary><span class="n">${n}</span><b>${title}</b></summary><div class="body">${body}</div></details>`;
+const note=(html,cls='')=>wide.matches?`<div class="note ${cls}">${html}</div>`:`<details class="nt"><summary>Note</summary><div class="note ${cls}">${html}</div></details>`;
+const introWide=`<h2>Explore the WDI</h2><p class="q">Hover over, tap or tab to any part of the fishbone.</p>
+ <p>The <b>tail</b> is where scoring starts: the removal test. Each of the five <b>bones</b> is one dimension, scored 1 to 5 against behavioral anchors and observable evidence. The <b>head</b> is deep, durable adoption: a total of 19–25 with no bone below 3. The <b>base</b>, encoding justice, applies to every workflow that serves a population.</p>
+ <p class="src">Five dimensions are combined into one total for convenience and read as a profile; the rule that no bone falls below 3 keeps a strong dimension from hiding a weak one.</p>`;
+const introNarrow=`<h2>Explore the WDI</h2><p class="q">Tap any part of the fish below, or a button under it. Its rubric appears here while the whole fish stays in view.</p>`;
+const render=k=>{
+ cur=k;if(!k){panel.innerHTML=wide.matches?introWide:introNarrow;return}
+ const d=D[k];let h=`<h2>${d.t}</h2><p class="q">${d.q}</p>`;
+ if(d.list){h+=d.levels.map((l,i)=>lv(i+1,l[0],l[1])).join('')}
+ else if(d.levels){h+=d.levels.map((l,i)=>lv(i+1,l[0],`${l[1]}<span class="ev">Evidence: ${l[2]}</span>`)).join('')}
+ if(d.band){h+=`<table><thead><tr><th>Band</th><th>Total</th><th>Condition</th></tr></thead><tbody>
+  <tr><td>Surface adopter</td><td>5–11</td><td>None</td></tr>
+  <tr><td>Transitional adopter</td><td>12–18</td><td>None</td></tr>
+  <tr><td>Deep adopter</td><td>19–25</td><td>No dimension below 3; for population-serving workflows, disaggregated outcome evidence with a documented response to any gap</td></tr></tbody></table>`+note('When between two levels, take the lower. For an organization, average its two or three most consequential workflows; it is deep only if each of them is. Bands and equal weights are conventions, not findings.')}
+ if(d.justice){h+=lv(1,'Disaggregate','Score User Adoption Level and Outcome Attribution overall and by equity-relevant group, such as race and ethnicity, income, language, geography or disability. Overall scores enter the total.','j')
+  +lv(2,'Respond to gaps','A workflow counts as deep only if its outcome evidence is disaggregated and any gap has a documented response.','j')
+  +lv(3,'Audit and include','AI-initiated actions (Action Integration 4–5) require equity audits; organizational change (Structural Reorganization 4) includes a voice for the people affected.','j')
+  +note('<b>Why.</b> Normatively, depth that widens inequity should not count. Practically, deep adoption is sustained reliance, reliance follows trust, and people trust systems they judge fair.','j')}
+ if(d.note)h+=note(d.note);
+ panel.innerHTML=h;
+ document.querySelectorAll('.part').forEach(p=>p.classList.toggle('on',p.dataset.k===k));
+ picker.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k));
+};
+wide.addEventListener('change',()=>render(cur));
+render(null);
+
+document.querySelectorAll('.part').forEach(p=>{
+ const k=p.dataset.k;
+ p.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')render(k)});
+ p.addEventListener('focus',()=>render(k));
+ p.addEventListener('click',()=>render(k));
+ p.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();render(k)}});
+});
+picker.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;render(b.dataset.k);if(!wide.matches){const r=panel.getBoundingClientRect();if(r.top<0||r.top>innerHeight*0.4)panel.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})}});
+}
+</script>
+</body>
+</html>
