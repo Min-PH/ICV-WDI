@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use or adapt this viewer or the WDI rubric, please cite it as below."
+title: "ICV-WDI: Interactive Concept Viewer for the Workflow Depth Index"
+type: software
+authors:
+  - family-names: Wu
+    given-names: Min
+    affiliation: "Zilber College of Public Health, University of Wisconsin-Milwaukee"
+license: CC-BY-4.0
+url: "https://min-ph.github.io/ICV-WDI/"
+repository-code: "https://github.com/Min-PH/ICV-WDI"
+date-released: 2026-11-19
+keywords:
+  - AI adoption
+  - workflow integration
+  - public health
+  - health equity
+  - concept map
+preferred-citation:
+  type: generic
+  title: "WDI: The Workflow Depth Index for AI Adoption"
+  authors:
+    - family-names: Wu
+      given-names: Min
+  year: 2026
+  publisher:
+    name: SSRN
+  notes: "SSRN preprint"
+  doi: "10.2139/ssrn.7702063"
+  url: "https://doi.org/10.2139/ssrn.7702063"
